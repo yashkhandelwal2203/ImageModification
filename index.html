@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoped css variables and js</title>
+</head>
+<style>
+    :root{
+        --base:#15f700;
+        --blur:5px;
+        --spacing:5px;
+        --borderradius:10px;
+    }
+
+    body{
+        text-align: center;
+        background-color: #15f700;
+        background:url("img2.jpg") no-repeat center  center/cover;
+    }
+
+    img{
+        margin-top: 50px;
+        padding: var(--spacing);
+        background: var(--base);
+        filter: blur(var(--blur));
+        border-radius: var(--borderradius);
+    }
+
+    .hl{
+        color: var(--base);
+    }
+
+    h2{
+        display: inline-block;
+        border: 2px solid rgba(0, 0, 0, 0.404);
+        border-radius: 10px;
+        padding: 10px 50px;
+        margin: 30px 20px;
+        background-color: rgb(243, 239, 189)
+    }
+
+    .controls label{
+        padding: 0px 30px;
+        font-size: 30px;
+    }
+
+</style>
+
+<body>
+    <h2>Change Of Picture Properties With <span class="hl">JS</span></h2>
+
+    <div class="controls">
+        <label for="spacing">Spacing:</label>
+        <input type="range" name="spacing" min="0" max="200" value="10" data-sizing="px">
+
+        <label for="blur">Blur:</label>
+        <input type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+        <label for="base">Base:</label>
+        <input type="color" name="base" value="#03f8fc">
+
+        <label for="borderradius">Border radius:</label>
+        <input type="range" name="borderradius" min="0" max="500" value="10" data-sizing="px">
+
+    </div>
+
+    <img src="img1.jpg">
+
+    <script>
+        const inputs=document.querySelectorAll('.controls input');
+
+        function handleupdate(){
+            const suffix=this.dataset.sizing || '';
+            // console.log(this.name);
+            document.documentElement.style.setProperty(`--${this.name}`,this.value+suffix);
+            // console.log(this.name);
+        }
+        inputs.forEach(input => input.addEventListener('change',handleupdate));
+        inputs.forEach(input => input.addEventListener('mousemover',handleupdate));
+
+    </script>
+</body>
+</html>
